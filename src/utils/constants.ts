@@ -1,0 +1,17 @@
+export const UPGRADES = [
+  { id: 1, name: "Bratwurstbude", basePrice: 50, bonus: 1 },
+  { id: 2, name: "Bandenwerbung", basePrice: 200, bonus: 3 },
+  { id: 3, name: "Parkplatz", basePrice: 500, bonus: 8 },
+  { id: 4, name: "Stadionkapazität", basePrice: 1500, bonus: 20 },
+  { id: 5, name: "Merchandise-Shop", basePrice: 4000, bonus: 50 },
+  { id: 6, name: "VIP-Loge", basePrice: 10000, bonus: 120 },
+  { id: 7, name: "Jugendakademie", basePrice: 25000, bonus: 300 },
+  { id: 8, name: "TV-Rechte", basePrice: 60000, bonus: 800 },
+  { id: 9, name: "Stadion-Namensrecht", basePrice: 150000, bonus: 2000 },
+  { id: 10, name: "Flagship-Store", basePrice: 400000, bonus: 5000 },
+  { id: 11, name: "Trainingszentrum", basePrice: 1000000, bonus: 12000 },
+  { id: 12, name: "Internationales Scouting", basePrice: 2500000, bonus: 30000 },
+  { id: 13, name: "Hotel am Stadion", basePrice: 7000000, bonus: 80000 },
+  { id: 14, name: "Weltweite Marke", basePrice: 20000000, bonus: 250000 },
+  { id: 15, name: "Globales Imperium", basePrice: 50000000, bonus: 1000000 },
+];
