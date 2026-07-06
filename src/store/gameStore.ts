@@ -1,3 +1,4 @@
+import { REDEEM_CODES } from '../config/RedeemCodes';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,6 +27,11 @@ const NAME_POOL: Record<string, NationPool> = {
   Brasilien: { flag: '🇧🇷', first: ['Vinícius', 'Rodrygo', 'Neymar', 'Gabriel', 'Casemiro', 'Bruno', 'Lucas'], last: ['Júnior', 'Silva', 'Guimarães', 'Paquetá', 'Jesus', 'Marquinhos', 'Alisson'] },
   USA: { flag: '🇺🇸', first: ['Christian', 'Weston', 'Timothy', 'Tyler', 'Gio', 'Antonee', 'Folarin'], last: ['Pulisic', 'McKennie', 'Weah', 'Adams', 'Reyna', 'Robinson', 'Balogun'] }
 };
+
+export interface PackDef {
+  id: string; name: string; emoji: string; ligaIndex: number; basePreis: number; growthProKauf: number;
+  min: number; max: number; chances: number[]; garantieRating: number;
+}
 
 export const getRarityByRating = (rating: number) => {
   if (rating >= 180) return { name: 'Ultimativ', color: '#ffffff', effect: 'ultimate', sellPrice: 2000000 };
@@ -154,24 +160,24 @@ export interface PackDef {
 }
 
 export const PACKS: PackDef[] = [
-  { id: 'bolzplatz', name: 'Bolzplatz-Pack', emoji: '🥅', ligaIndex: 0, basePreis: 150, growthProKauf: 1.35, min: 20, max: 35, chances: [100, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { id: 'kiez', name: 'Kiez-Pack', emoji: '🏘️', ligaIndex: 0, basePreis: 450, growthProKauf: 1.35, min: 20, max: 48, chances: [80, 20, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { id: 'kreisel', name: 'Kreisel-Pack', emoji: '🌀', ligaIndex: 0, basePreis: 1200, growthProKauf: 1.35, min: 20, max: 62, chances: [73.6, 20.6, 5.8, 0, 0, 0, 0, 0, 0, 0] },
-  { id: 'aufstiegs', name: 'Aufstiegs-Pack', emoji: '📈', ligaIndex: 1, basePreis: 3500, growthProKauf: 1.35, min: 20, max: 78, chances: [70.6, 21.2, 6.4, 1.9, 0, 0, 0, 0, 0, 0] },
-  { id: 'fokus', name: 'Fokus-Pack', emoji: '🎯', ligaIndex: 2, basePreis: 18600, growthProKauf: 1.35, min: 30, max: 78, chances: [0, 70.3, 22.5, 7.2, 0, 0, 0, 0, 0, 0] },
-  { id: 'ambitions', name: 'Ambitions-Pack', emoji: '🔥', ligaIndex: 3, basePreis: 98800, growthProKauf: 1.35, min: 30, max: 92, chances: [0, 66.9, 22.7, 7.7, 2.6, 0, 0, 0, 0, 0] },
-  { id: 'adrenalin', name: 'Adrenalin-Pack', emoji: '⚡', ligaIndex: 4, basePreis: 525000, growthProKauf: 1.35, min: 42, max: 92, chances: [0, 0, 67.9, 23.8, 8.3, 0, 0, 0, 0, 0] },
-  { id: 'fusion', name: 'Fusion-Pack', emoji: '🌐', ligaIndex: 5, basePreis: 2790000, growthProKauf: 1.35, min: 42, max: 108, chances: [0, 0, 64.2, 23.8, 8.8, 3.3, 0, 0, 0, 0] },
-  { id: 'prestige', name: 'Prestige-Pack', emoji: '💎', ligaIndex: 6, basePreis: 14820000, growthProKauf: 1.35, min: 55, max: 108, chances: [0, 0, 0, 65.6, 24.9, 9.5, 0, 0, 0, 0] },
-  { id: 'elite', name: 'Elite-Pack', emoji: '⭐', ligaIndex: 7, basePreis: 78740000, growthProKauf: 1.35, min: 55, max: 125, chances: [0, 0, 0, 61.6, 24.6, 9.9, 3.9, 0, 0, 0] },
-  { id: 'titan', name: 'Titan-Pack', emoji: '🗿', ligaIndex: 8, basePreis: 418330000, growthProKauf: 1.35, min: 68, max: 125, chances: [0, 0, 0, 0, 63.4, 26.0, 10.7, 0, 0, 0] },
-  { id: 'phoenix', name: 'Phoenix-Pack', emoji: '🔥', ligaIndex: 9, basePreis: 2223000000, growthProKauf: 1.35, min: 68, max: 150, chances: [0, 0, 0, 0, 59.9, 25.1, 10.6, 4.4, 0, 0] },
-  { id: 'galaxie', name: 'Galaxie-Pack', emoji: '🌌', ligaIndex: 10, basePreis: 11809000000, growthProKauf: 1.35, min: 80, max: 150, chances: [0, 0, 0, 0, 0, 61.2, 26.9, 11.9, 0, 0] },
-  { id: 'zenit', name: 'Zenit-Pack', emoji: '☀️', ligaIndex: 11, basePreis: 62744000000, growthProKauf: 1.35, min: 80, max: 190, chances: [0, 0, 0, 0, 0, 56.5, 26.0, 12.0, 5.5, 0] },
-  { id: 'kosmos', name: 'Kosmos-Pack', emoji: '🌠', ligaIndex: 12, basePreis: 333365000000, growthProKauf: 1.35, min: 95, max: 190, chances: [0, 0, 0, 0, 0, 0, 58.5, 28.1, 13.5, 0] },
-  { id: 'olymp', name: 'Olymp-Pack', emoji: '🏛️', ligaIndex: 13, basePreis: 1771209000000, growthProKauf: 1.35, min: 95, max: 250, chances: [0, 0, 0, 0, 0, 0, 53.3, 26.7, 13.3, 6.7] },
-  { id: 'legenden', name: 'Legenden-Pack', emoji: '👑', ligaIndex: 14, basePreis: 9410655000000, growthProKauf: 1.35, min: 115, max: 250, chances: [0, 0, 0, 0, 0, 0, 0, 54.0, 29.7, 16.3] },
-  { id: 'unendlichkeit', name: 'Unendlichkeits-Pack', emoji: '♾️', ligaIndex: 15, basePreis: 50000000000000, growthProKauf: 1.35, min: 140, max: 250, chances: [0, 0, 0, 0, 0, 0, 0, 0, 60.6, 39.4] },
+  { id: 'bolzplatz', name: 'Bolzplatz-Pack', emoji: '🥅', ligaIndex: 0, basePreis: 150, growthProKauf: 1.35, min: 20, max: 35, chances: [100, 0, 0, 0, 0, 0, 0, 0, 0, 0], garantieRating: 20 },
+  { id: 'kiez', name: 'Kiez-Pack', emoji: '🏘️', ligaIndex: 0, basePreis: 450, growthProKauf: 1.35, min: 20, max: 48, chances: [80, 20, 0, 0, 0, 0, 0, 0, 0, 0], garantieRating: 20 },
+  { id: 'kreisel', name: 'Kreisel-Pack', emoji: '🌀', ligaIndex: 0, basePreis: 1200, growthProKauf: 1.35, min: 20, max: 62, chances: [73.6, 20.6, 5.8, 0, 0, 0, 0, 0, 0, 0], garantieRating: 20 },
+  { id: 'aufstiegs', name: 'Aufstiegs-Pack', emoji: '📈', ligaIndex: 1, basePreis: 3500, growthProKauf: 1.35, min: 20, max: 78, chances: [70.6, 21.2, 6.4, 1.9, 0, 0, 0, 0, 0, 0], garantieRating: 20 },
+  { id: 'fokus', name: 'Fokus-Pack', emoji: '🎯', ligaIndex: 2, basePreis: 18600, growthProKauf: 1.35, min: 30, max: 78, chances: [0, 70.3, 22.5, 7.2, 0, 0, 0, 0, 0, 0], garantieRating: 42 },
+  { id: 'ambitions', name: 'Ambitions-Pack', emoji: '🔥', ligaIndex: 3, basePreis: 98800, growthProKauf: 1.35, min: 30, max: 92, chances: [0, 66.9, 22.7, 7.7, 2.6, 0, 0, 0, 0, 0], garantieRating: 55 },
+  { id: 'adrenalin', name: 'Adrenalin-Pack', emoji: '⚡', ligaIndex: 4, basePreis: 525000, growthProKauf: 1.35, min: 42, max: 92, chances: [0, 0, 67.9, 23.8, 8.3, 0, 0, 0, 0, 0], garantieRating: 68 },
+  { id: 'fusion', name: 'Fusion-Pack', emoji: '🌐', ligaIndex: 5, basePreis: 2790000, growthProKauf: 1.35, min: 42, max: 108, chances: [0, 0, 64.2, 23.8, 8.8, 3.3, 0, 0, 0, 0], garantieRating: 68 },
+  { id: 'prestige', name: 'Prestige-Pack', emoji: '💎', ligaIndex: 6, basePreis: 14820000, growthProKauf: 1.35, min: 55, max: 108, chances: [0, 0, 0, 65.6, 24.9, 9.5, 0, 0, 0, 0], garantieRating: 80 },
+  { id: 'elite', name: 'Elite-Pack', emoji: '⭐', ligaIndex: 7, basePreis: 78740000, growthProKauf: 1.35, min: 55, max: 125, chances: [0, 0, 0, 61.6, 24.6, 9.9, 3.9, 0, 0, 0], garantieRating: 80 },
+  { id: 'titan', name: 'Titan-Pack', emoji: '🗿', ligaIndex: 8, basePreis: 418330000, growthProKauf: 1.35, min: 68, max: 125, chances: [0, 0, 0, 0, 63.4, 26.0, 10.7, 0, 0, 0], garantieRating: 95 },
+  { id: 'phoenix', name: 'Phoenix-Pack', emoji: '🔥', ligaIndex: 9, basePreis: 2223000000, growthProKauf: 1.35, min: 68, max: 150, chances: [0, 0, 0, 0, 59.9, 25.1, 10.6, 4.4, 0, 0], garantieRating: 95 },
+  { id: 'galaxie', name: 'Galaxie-Pack', emoji: '🌌', ligaIndex: 10, basePreis: 11809000000, growthProKauf: 1.35, min: 80, max: 150, chances: [0, 0, 0, 0, 0, 61.2, 26.9, 11.9, 0, 0], garantieRating: 115 },
+  { id: 'zenit', name: 'Zenit-Pack', emoji: '☀️', ligaIndex: 11, basePreis: 62744000000, growthProKauf: 1.35, min: 80, max: 190, chances: [0, 0, 0, 0, 0, 56.5, 26.0, 12.0, 5.5, 0], garantieRating: 115 },
+  { id: 'kosmos', name: 'Kosmos-Pack', emoji: '🌠', ligaIndex: 12, basePreis: 333365000000, growthProKauf: 1.35, min: 95, max: 190, chances: [0, 0, 0, 0, 0, 0, 58.5, 28.1, 13.5, 0], garantieRating: 140 },
+  { id: 'olymp', name: 'Olymp-Pack', emoji: '🏛️', ligaIndex: 13, basePreis: 1771209000000, growthProKauf: 1.35, min: 95, max: 250, chances: [0, 0, 0, 0, 0, 0, 53.3, 26.7, 13.3, 6.7], garantieRating: 140 },
+  { id: 'legenden', name: 'Legenden-Pack', emoji: '👑', ligaIndex: 14, basePreis: 9410655000000, growthProKauf: 1.35, min: 115, max: 250, chances: [0, 0, 0, 0, 0, 0, 0, 54.0, 29.7, 16.3], garantieRating: 180 },
+  { id: 'unendlichkeit', name: 'Unendlichkeits-Pack', emoji: '♾️', ligaIndex: 15, basePreis: 50000000000000, growthProKauf: 1.35, min: 140, max: 250, chances: [0, 0, 0, 0, 0, 0, 0, 0, 60.6, 39.4], garantieRating: 180 },
 ];
 
 export const RARITY_INTERVALS = [
@@ -179,8 +185,8 @@ export const RARITY_INTERVALS = [
   { min: 80, max: 108 }, { min: 95, max: 125 }, { min: 115, max: 150 }, { min: 140, max: 190 }, { min: 180, max: 250 },
 ];
 
-export const getPackPreis = (pack: PackDef, anzahlGekauft: number): number =>
-  Math.floor(pack.basePreis * Math.pow(pack.growthProKauf, anzahlGekauft));
+export const getPackPreis = (pack: PackDef, _anzahlGekauft: number): number =>
+  pack.basePreis
 
 // ============ SPONSOREN (12) ============
 export interface SponsorDef { id: string; ligaIndex: number; name: string; benoetigteFans: number; antrittspraemie: number; bonusProSekunde: number; }
@@ -295,9 +301,10 @@ interface GameState {
   gesamtRemis: number;
   gesamtNiederlagen: number;
 
-  clickHome: () => void;
+ clickHome: () => void;
   addPlayerToKader: (player: Omit<Player, 'id'>) => void;
   verkaufeSpieler: (id: string, preis: number) => void;
+  verkaufeSpielerBulk: (ids: string[]) => void;
   setFormation: (form: FormationType) => void;
   setzeInSlot: (slotId: string, player: Player | null) => void;
   buyUpgrade: (id: string) => void;
@@ -377,6 +384,22 @@ export const useGameStore = create<GameState>()(
         const neueSlots = { ...state.aufstellungSlots };
         Object.keys(neueSlots).forEach((slot) => { if (neueSlots[slot]?.id === id) neueSlots[slot] = null; });
         return { geld: state.geld + preis, kader: state.kader.filter((p) => p.id !== id), aufstellungSlots: neueSlots };
+      }),
+
+      verkaufeSpielerBulk: (ids) => set((state) => {
+        const idSet = new Set(ids);
+        const summe = state.kader
+          .filter((p) => idSet.has(p.id))
+          .reduce((acc, p) => acc + p.rarity.sellPrice, 0);
+        const neueSlots = { ...state.aufstellungSlots };
+        Object.keys(neueSlots).forEach((slot) => {
+          if (neueSlots[slot] && idSet.has(neueSlots[slot]!.id)) neueSlots[slot] = null;
+        });
+        return {
+          geld: state.geld + summe,
+          kader: state.kader.filter((p) => !idSet.has(p.id)),
+          aufstellungSlots: neueSlots,
+        };
       }),
 
       setFormation: (formation) => set({ formation }),
